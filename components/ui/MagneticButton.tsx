@@ -14,6 +14,7 @@ type Props = {
   rel?: string;
   type?: "button" | "submit";
   ariaLabel?: string;
+  download?: boolean;
 };
 
 export default function MagneticButton({
@@ -26,6 +27,7 @@ export default function MagneticButton({
   rel,
   type = "button",
   ariaLabel,
+  download,
 }: Props) {
   const ref = useRef<HTMLAnchorElement & HTMLButtonElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -65,6 +67,7 @@ export default function MagneticButton({
         href={href}
         target={target}
         rel={rel}
+        download={download}
         aria-label={ariaLabel}
         onMouseMove={handleMove}
         onMouseLeave={reset}

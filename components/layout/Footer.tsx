@@ -1,6 +1,6 @@
 import { Mail } from "lucide-react";
 import { profile } from "@/lib/data";
-import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
+import { GithubIcon } from "@/components/ui/BrandIcons";
 
 export default function Footer() {
   return (
@@ -25,15 +25,6 @@ export default function Footer() {
             className="text-ink-muted transition-colors hover:text-cyan"
           >
             <GithubIcon className="h-[18px] w-[18px]" />
-          </a>
-          <a
-            href={profile.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="text-ink-muted transition-colors hover:text-cyan"
-          >
-            <LinkedinIcon className="h-[18px] w-[18px]" />
           </a>
         </div>
       </div>

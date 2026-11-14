@@ -8,7 +8,7 @@ import { projects, type Project } from "@/lib/data";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 
-const categories = ["All", "Ecommerce", "AI", "Frontend"] as const;
+const categories = ["All", "E-commerce", "Full Stack", "AI"] as const;
 
 const accentMap: Record<Project["accent"], string> = {
   cyan: "from-cyan/20 via-cyan/5 to-transparent",
@@ -22,7 +22,7 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (p: Projec
       onClick={() => onOpen(project)}
       whileHover={{ y: -6 }}
       transition={{ type: "spring", stiffness: 300, damping: 22 }}
-      className="group relative overflow-hidden rounded-2xl border border-border bg-surface p-7 text-left"
+      className="group relative h-full w-full overflow-hidden rounded-2xl border border-border bg-surface p-7 text-left"
     >
       <div
         className={`absolute inset-0 bg-gradient-to-br ${accentMap[project.accent]} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
@@ -30,7 +30,7 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (p: Projec
       />
       <div className="relative z-10">
         <div className="flex items-start justify-between">
-          <span className="eyebrow">{project.category}</span>
+          <span className="eyebrow">{project.categories.join(" / ")}</span>
           <ArrowUpRight
             size={18}
             className="text-ink-muted transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-cyan"
@@ -56,6 +56,10 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (p: Projec
 }
 
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  const liveUrl = project.liveUrl && project.liveUrl !== "#" ? project.liveUrl : undefined;
+  const githubUrl =
+    project.githubUrl && project.githubUrl !== "#" ? project.githubUrl : undefined;
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -83,15 +87,26 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
           <X size={18} />
         </button>
 
-        <span className="eyebrow">{project.category} Case Study</span>
+        <span className="eyebrow">{project.categories.join(" / ")} Case Study</span>
         <h3 id="project-modal-title" className="mt-3 font-display text-2xl font-semibold text-ink-bright md:text-3xl">
           {project.title}
         </h3>
         <p className="mt-4 text-base leading-relaxed text-ink-muted">{project.description}</p>
 
+        {project.caseStudy?.overview && (
+          <div className="mt-6">
+            <span className="text-xs font-medium uppercase tracking-wide text-ink-muted">
+              Project overview
+            </span>
+            <p className="mt-3 text-sm leading-relaxed text-ink-muted">
+              {project.caseStudy.overview}
+            </p>
+          </div>
+        )}
+
         <div className="mt-6">
           <span className="text-xs font-medium uppercase tracking-wide text-ink-muted">
-            Highlights
+            {project.caseStudy ? "Key features" : "Highlights"}
           </span>
           <ul className="mt-3 space-y-2">
             {project.highlights.map((h) => (
@@ -103,35 +118,57 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
           </ul>
         </div>
 
-        <div className="mt-6 flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full border border-border-strong px-3 py-1 font-mono text-[11px] text-ink-muted"
-            >
-              {tag}
-            </span>
-          ))}
+        <div className="mt-6">
+          <span className="text-xs font-medium uppercase tracking-wide text-ink-muted">
+            Technology stack
+          </span>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-border-strong px-3 py-1 font-mono text-[11px] text-ink-muted"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-ink-bright px-5 py-2.5 text-sm font-medium text-black hover:bg-cyan"
-          >
-            Live demo <ArrowUpRight size={14} />
-          </a>
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-border-strong px-5 py-2.5 text-sm text-ink hover:border-cyan hover:text-cyan"
-          >
-            <GithubIcon className="h-[14px] w-[14px]" /> Source
-          </a>
-        </div>
+        {project.caseStudy?.integrationDetails && (
+          <div className="mt-6">
+            <span className="text-xs font-medium uppercase tracking-wide text-ink-muted">
+              AI integration
+            </span>
+            <p className="mt-3 text-sm leading-relaxed text-ink-muted">
+              {project.caseStudy.integrationDetails}
+            </p>
+          </div>
+        )}
+
+        {(liveUrl || githubUrl) && (
+          <div className="mt-8 flex flex-wrap gap-3">
+            {liveUrl && (
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-ink-bright px-5 py-2.5 text-sm font-medium text-black hover:bg-cyan"
+              >
+                Live demo <ArrowUpRight size={14} />
+              </a>
+            )}
+            {githubUrl && (
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-border-strong px-5 py-2.5 text-sm text-ink hover:border-cyan hover:text-cyan"
+              >
+                <GithubIcon className="h-[14px] w-[14px]" /> Source
+              </a>
+            )}
+          </div>
+        )}
       </motion.div>
     </motion.div>
   );
@@ -142,7 +179,10 @@ export default function Projects() {
   const [active, setActive] = useState<Project | null>(null);
 
   const filtered = useMemo(
-    () => (filter === "All" ? projects : projects.filter((p) => p.category === filter)),
+    () => {
+      if (filter === "All") return projects;
+      return projects.filter((project) => project.categories.includes(filter));
+    },
     [filter],
   );
 
@@ -152,7 +192,7 @@ export default function Projects() {
         <SectionHeading
           eyebrow="Projects"
           title="Selected work."
-          description="A mix of luxury ecommerce builds and AI-driven product experiments."
+          description="A premium fashion storefront for product discovery and an AI-powered contract management platform."
         />
 
         <Reveal delay={0.15} className="mt-10 flex flex-wrap gap-2">

@@ -1,10 +1,12 @@
 import type { MetadataRoute } from "next";
+import { siteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = "https://mirzaayanbaig.dev"; // PLACEHOLDER — your real domain
+  if (!siteUrl) return [];
+
   return [
     {
-      url: siteUrl,
+      url: siteUrl.toString(),
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,

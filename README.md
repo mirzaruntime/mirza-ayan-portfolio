@@ -40,9 +40,11 @@ and fill in your real details:
 | Project live demo / GitHub links | each `Project.liveUrl` / `Project.githubUrl` |
 | Testimonials | `components/sections/Testimonials.tsx` — currently honest empty-state placeholders |
 
-Also update:
-- `app/layout.tsx` — `siteUrl` constant (your real domain), and add a real `/public/og-image.png` (1200×630) for social share previews
-- `app/sitemap.ts` and `app/robots.ts` — same `siteUrl` constant
+Before deploying, set the `SITE_URL` environment variable to your actual deployed
+site origin (for example, `https://your-domain.example`). Until it is configured,
+canonical URLs, the sitemap URL, and the structured-data site URL are omitted.
+No social preview image is currently present, so Open Graph and Twitter image
+references are omitted as well; add a real image asset before configuring one.
 
 No experience, education, or certificates were listed in the brief, so those
 sections were intentionally left out rather than invented. Add an `Experience.tsx`
@@ -74,9 +76,8 @@ lib/
 - **Colors** — near-black base (`#09090B`), elevated surfaces (`#0F172A`, `#18181B`),
   electric cyan / soft blue / purple-glow accents.
 - **Type** — Space Grotesk (display), Inter (body), JetBrains Mono (labels/eyebrows/code).
-- **Signature interaction** — the hero's terminal-style role cycler (`$ AI Engineer (Aspiring)_`)
-  ties the "developer" identity directly into the first thing a visitor sees, instead of a
-  generic tagline.
+- **Signature interaction** — the hero presents the full-stack/MERN developer focus
+  directly alongside the portfolio owner's name.
 - Respects `prefers-reduced-motion` throughout.
 
 ## Deployment

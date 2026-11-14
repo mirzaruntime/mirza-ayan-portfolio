@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/lib/data";
+import { siteUrl } from "@/lib/site";
 import CursorGlow from "@/components/ui/CursorGlow";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 
@@ -26,45 +27,42 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const siteUrl = "https://mirzaayanbaig.dev"; // PLACEHOLDER — your real domain
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
   title: {
-    default: `${profile.name} — AI Engineer & Full Stack Developer`,
-    template: `%s — ${profile.name}`,
+    default: `${profile.name} | Full-Stack Developer`,
+    template: `%s | ${profile.name}`,
   },
   description:
-    "Portfolio of Mirza Ayan Baig — an aspiring AI Engineer and full-stack MERN developer building premium, AI-powered web experiences.",
+    "Portfolio of Mirza Ayan Baig, a Full-Stack Developer focused on the MERN stack, backend development, modern web applications, and practical AI integration.",
   keywords: [
     "Mirza Ayan Baig",
-    "AI Engineer",
     "Full Stack Developer",
     "MERN Developer",
     "Next.js Developer",
-    "Generative AI",
-    "Agentic AI",
+    "Backend Developer",
+    "AI Integration",
     "Frontend Developer Portfolio",
   ],
   authors: [{ name: profile.name }],
   creator: profile.name,
   robots: { index: true, follow: true },
-  alternates: { canonical: "/" },
+  ...(siteUrl && {
+    metadataBase: siteUrl,
+    alternates: { canonical: "/" },
+  }),
   openGraph: {
     type: "website",
-    url: siteUrl,
-    title: `${profile.name} — AI Engineer & Full Stack Developer`,
+    ...(siteUrl && { url: siteUrl.toString() }),
+    title: `${profile.name} | Full-Stack Developer`,
     description:
-      "Aspiring AI Engineer and full-stack MERN developer building premium, AI-powered web experiences.",
+      "Portfolio of Mirza Ayan Baig, a Full-Stack Developer focused on the MERN stack, backend development, modern web applications, and practical AI integration.",
     siteName: profile.name,
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: profile.name }], // PLACEHOLDER — add /public/og-image.png
   },
   twitter: {
-    card: "summary_large_image",
-    title: `${profile.name} — AI Engineer & Full Stack Developer`,
+    card: "summary",
+    title: `${profile.name} | Full-Stack Developer`,
     description:
-      "Aspiring AI Engineer and full-stack MERN developer building premium, AI-powered web experiences.",
-    images: ["/og-image.png"],
+      "Portfolio of Mirza Ayan Baig, a Full-Stack Developer focused on the MERN stack, backend development, modern web applications, and practical AI integration.",
   },
 };
 
@@ -72,9 +70,9 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: profile.name,
-  url: siteUrl,
-  jobTitle: "AI Engineer (Aspiring) & Full Stack Developer",
-  sameAs: [profile.github, profile.linkedin],
+  ...(siteUrl && { url: siteUrl.toString() }),
+  jobTitle: "Junior Full-Stack Developer",
+  sameAs: [profile.github],
 };
 
 export default function RootLayout({

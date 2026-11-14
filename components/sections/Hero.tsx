@@ -1,71 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, FileText } from "lucide-react";
 import { GithubIcon } from "@/components/ui/BrandIcons";
-import { profile } from "@/lib/data";
 import MagneticButton from "@/components/ui/MagneticButton";
+import { profile } from "@/lib/data";
 
-type TypedState = {
-  index: number;
-  text: string;
-  phase: "typing" | "holding" | "deleting";
-};
-
-function useTypedCycle(words: string[], typingMs = 55, holdMs = 1400, deletingMs = 30) {
-  const [state, setState] = useState<TypedState>({ index: 0, text: "", phase: "typing" });
-
-  useEffect(() => {
-    const { index, text, phase } = state;
-    const word = words[index];
-    let timeout: ReturnType<typeof setTimeout>;
-
-    if (phase === "typing") {
-      if (text.length < word.length) {
-        timeout = setTimeout(
-          () => setState((s) => ({ ...s, text: word.slice(0, s.text.length + 1) })),
-          typingMs,
-        );
-      } else {
-        timeout = setTimeout(() => setState((s) => ({ ...s, phase: "holding" })), holdMs);
-      }
-    } else if (phase === "holding") {
-      timeout = setTimeout(() => setState((s) => ({ ...s, phase: "deleting" })), 200);
-    } else {
-      if (text.length > 0) {
-        timeout = setTimeout(
-          () => setState((s) => ({ ...s, text: word.slice(0, s.text.length - 1) })),
-          deletingMs,
-        );
-      } else {
-        timeout = setTimeout(
-          () =>
-            setState((s) => ({
-              index: (s.index + 1) % words.length,
-              text: "",
-              phase: "typing",
-            })),
-          10,
-        );
-      }
-    }
-
-    return () => clearTimeout(timeout);
-  }, [state, words, typingMs, holdMs, deletingMs]);
-
-  return state.text;
-}
+const roleLabels = ["MERN Stack", "Backend Development", "AI Integration"];
 
 export default function Hero() {
-  const typed = useTypedCycle(profile.roles);
-
   return (
     <section
       id="top"
       className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden px-6 pt-28 pb-16"
     >
-      {/* background layers */}
       <div className="absolute inset-0 -z-10 grid-mesh" aria-hidden />
       <div
         className="absolute -top-40 left-1/2 -z-10 h-[560px] w-[560px] -translate-x-1/2 rounded-full opacity-30 blur-[120px]"
@@ -97,53 +45,67 @@ export default function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="font-display text-[13vw] font-semibold leading-[0.95] tracking-tight text-ink-bright sm:text-[9vw] md:text-[6.2vw]"
+          className="font-display text-[10.5vw] font-semibold leading-[0.95] tracking-tight text-ink-bright sm:text-[9vw] md:text-[6.2vw]"
         >
-          {profile.name}
+          Mirza Ayan Baig
         </motion.h1>
 
-        <motion.div
+        <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-6 flex items-center gap-3"
+          className="mt-6 font-mono text-lg text-cyan md:text-2xl"
         >
-          <span className="font-mono text-lg text-ink-muted md:text-2xl">$</span>
-          <p className="font-mono text-lg text-cyan md:text-2xl">
-            {typed}
-            <span className="ml-1 inline-block h-[1.1em] w-[2px] translate-y-[3px] animate-pulse bg-cyan align-middle" />
-          </p>
-        </motion.div>
+          <span className="block sm:inline">Full-Stack Developer</span>
+          <span className="hidden sm:inline"> | </span>
+          <span className="block sm:inline">MERN Stack</span>
+        </motion.p>
 
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.45 }}
-          className="mt-6 max-w-xl text-base leading-relaxed text-ink-muted md:text-lg"
+          className="mt-6 max-w-2xl text-base leading-relaxed text-ink-muted md:text-lg"
         >
-          I build premium, AI-powered web experiences — from luxury ecommerce to
-          intelligent recommendation platforms — while training every day toward
-          becoming a full-time AI Engineer.
+          Building modern full-stack web applications with the MERN stack and exploring
+          practical AI integrations to create useful, user-focused solutions.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.55 }}
+          className="mt-6 flex flex-wrap gap-2"
+        >
+          {roleLabels.map((label) => (
+            <span
+              key={label}
+              className="rounded-full border border-border-strong bg-surface/80 px-3 py-1.5 font-mono text-[11px] text-ink-muted"
+            >
+              {label}
+            </span>
+          ))}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
           className="mt-10 flex flex-wrap items-center gap-4"
         >
-          <MagneticButton href="#projects">
-            View my work
-          </MagneticButton>
+          <MagneticButton href="#projects">View Projects</MagneticButton>
+          {profile.resumeUrl && (
+            <MagneticButton
+              href={profile.resumeUrl}
+              variant="secondary"
+              ariaLabel="Download resume"
+              download
+            >
+              <FileText size={16} /> Download Resume
+            </MagneticButton>
+          )}
           <MagneticButton
-            href={profile.resumeUrl}
-            variant="secondary"
-            ariaLabel="Download resume"
-          >
-            <FileText size={16} /> Resume
-          </MagneticButton>
-          <MagneticButton
-            href={profile.github}
+            href="https://github.com/mirzaruntime"
             variant="secondary"
             target="_blank"
             rel="noopener noreferrer"

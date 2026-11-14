@@ -10,7 +10,7 @@ const links = [
   { href: "#about", label: "About" },
   { href: "#skills", label: "Skills" },
   { href: "#projects", label: "Projects" },
-  { href: "#services", label: "Services" },
+  { href: "#experience", label: "Experience" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -35,7 +35,7 @@ export default function Navbar() {
           href="#top"
           className="font-display text-lg font-semibold tracking-tight text-ink-bright"
         >
-          M<span className="text-cyan">.</span>Baig
+          M<span className="text-cyan">.</span>Ayan
         </a>
 
         <nav

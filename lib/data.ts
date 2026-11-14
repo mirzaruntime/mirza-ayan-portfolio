@@ -3,7 +3,16 @@
 // should be replaced with your real details before deploying.
 // ─────────────────────────────────────────────────────────────
 
-export const profile = {
+type Profile = {
+  name: string;
+  roles: string[];
+  mission: string;
+  email: string;
+  github: string;
+  resumeUrl?: string;
+};
+
+export const profile: Profile = {
   name: "Mirza Ayan Baig",
   roles: [
     "AI Engineer (Aspiring)",
@@ -14,11 +23,9 @@ export const profile = {
   ],
   mission:
     "My goal is to become an AI Engineer while building world-class, AI-powered web applications.",
-  location: "PLACEHOLDER — City, Country",
-  email: "you@example.com", // PLACEHOLDER
-  github: "https://github.com/your-username", // PLACEHOLDER
-  linkedin: "https://linkedin.com/in/your-username", // PLACEHOLDER
-  resumeUrl: "#", // PLACEHOLDER — add /resume.pdf to /public and point here
+  email: "ayanmirza.dev@gmail.com",
+  github: "https://github.com/mirzaruntime",
+  resumeUrl: "/resume.pdf",
 };
 
 export const learning = [
@@ -42,185 +49,169 @@ export type SkillCategory = {
   id: string;
   label: string;
   eyebrow: string;
-  skills: { name: string; level: number }[];
+  skills: Skill[];
+};
+
+export type Skill = {
+  name: string;
+  percentage: number;
 };
 
 export const skillCategories: SkillCategory[] = [
   {
     id: "frontend",
-    label: "Frontend",
+    label: "Frontend Development",
     eyebrow: "Interfaces",
     skills: [
-      { name: "HTML / CSS", level: 92 },
-      { name: "JavaScript", level: 88 },
-      { name: "TypeScript", level: 78 },
-      { name: "React", level: 85 },
-      { name: "Next.js", level: 80 },
-      { name: "Tailwind CSS", level: 90 },
-      { name: "Framer Motion", level: 75 },
-      { name: "Shadcn UI", level: 78 },
-      { name: "Three.js", level: 55 },
+      { name: "HTML", percentage: 92 },
+      { name: "CSS", percentage: 90 },
+      { name: "JavaScript", percentage: 90 },
+      { name: "TypeScript", percentage: 82 },
+      { name: "React", percentage: 88 },
+      { name: "Next.js", percentage: 85 },
+      { name: "Tailwind CSS", percentage: 92 },
     ],
   },
   {
     id: "backend",
-    label: "Backend",
+    label: "Backend Development",
     eyebrow: "Systems",
     skills: [
-      { name: "Node.js", level: 80 },
-      { name: "Express", level: 78 },
-      { name: "MongoDB", level: 76 },
-      { name: "Prisma", level: 65 },
-      { name: "Supabase", level: 72 },
-      { name: "REST APIs", level: 82 },
-      { name: "Authentication", level: 74 },
+      { name: "Node.js", percentage: 85 },
+      { name: "Express.js", percentage: 83 },
+      { name: "REST APIs", percentage: 87 },
+      { name: "JWT Authentication", percentage: 80 },
+      { name: "Mongoose", percentage: 82 },
+      { name: "Zod", percentage: 80 },
     ],
   },
   {
-    id: "ai",
-    label: "AI",
-    eyebrow: "Intelligence",
+    id: "databases",
+    label: "Databases",
+    eyebrow: "Data",
     skills: [
-      { name: "OpenAI API", level: 78 },
-      { name: "Prompt Engineering", level: 80 },
-      { name: "AI Automation", level: 70 },
-      { name: "Generative AI", level: 68 },
-      { name: "LLMs", level: 70 },
-      { name: "Agentic AI", level: 55 },
-      { name: "Python", level: 65 },
+      { name: "MongoDB", percentage: 82 },
+      { name: "PostgreSQL", percentage: 78 },
+      { name: "Supabase", percentage: 82 },
+      { name: "MySQL", percentage: 80 },
+    ],
+  },
+  {
+    id: "integrations",
+    label: "APIs & Integrations",
+    eyebrow: "Integrations",
+    skills: [
+      { name: "Gemini API", percentage: 82 },
+      { name: "AI Integration", percentage: 82 },
+      { name: "Stripe", percentage: 76 },
     ],
   },
   {
     id: "tools",
-    label: "Tools",
+    label: "Tools & Other Technologies",
     eyebrow: "Workflow",
     skills: [
-      { name: "Git / GitHub", level: 88 },
-      { name: "VS Code", level: 95 },
-      { name: "Postman", level: 80 },
-      { name: "Figma", level: 70 },
-      { name: "Vercel", level: 85 },
-      { name: "Railway", level: 70 },
-      { name: "Stripe", level: 68 },
+      { name: "Git", percentage: 85 },
+      { name: "GitHub", percentage: 88 },
+      { name: "VS Code", percentage: 95 },
+      { name: "Postman", percentage: 85 },
+      { name: "Vercel", percentage: 88 },
+      { name: "Figma", percentage: 78 },
+      { name: "PHP", percentage: 80 },
+      { name: "Python", percentage: 75 },
     ],
   },
 ];
 
+export type ProjectCategory = "E-commerce" | "Full Stack" | "AI";
+
 export type Project = {
   id: string;
   title: string;
-  category: "Ecommerce" | "AI" | "Frontend";
+  categories: ProjectCategory[];
   description: string;
   tags: string[];
   highlights: string[];
-  liveUrl: string;
-  githubUrl: string;
+  caseStudy?: {
+    overview: string;
+    integrationDetails?: string;
+  };
+  liveUrl?: string;
+  githubUrl?: string;
   accent: "cyan" | "purple" | "blue";
 };
 
 export const projects: Project[] = [
   {
     id: "aura",
-    title: "AURA — Premium Clothing Store",
-    category: "Ecommerce",
+    title: "AURA Studio",
+    categories: ["E-commerce"],
     description:
-      "A luxury fashion ecommerce experience with a full checkout flow, wishlist, and editorial-grade animation on every page.",
-    tags: ["Next.js", "TypeScript", "Tailwind", "Stripe", "Supabase", "SEO"],
+      "A premium fashion storefront for product discovery, with product details and variants, a shopping cart, Supabase integration, and Stripe checkout session creation.",
+    tags: ["Next.js", "TypeScript", "Tailwind", "Stripe", "Supabase"],
     highlights: [
-      "Stripe-powered checkout & payments",
-      "Wishlist with persisted state",
-      "Luxury motion design & micro-interactions",
-      "Fully responsive, SEO-optimized",
+      "Premium fashion storefront and product discovery",
+      "Product details and variants",
+      "Shopping cart",
+      "Supabase integration",
+      "Stripe checkout session creation",
     ],
-    liveUrl: "#", // PLACEHOLDER — add live demo link
-    githubUrl: "#", // PLACEHOLDER — add repo link
     accent: "cyan",
   },
   {
-    id: "aifashion",
-    title: "AIFashion",
-    category: "AI",
+    id: "clauseguard",
+    title: "ClauseGuard",
+    categories: ["Full Stack", "AI"],
     description:
-      "An AI-driven fashion recommendation platform built around a personality-style quiz and mood-based shopping.",
-    tags: ["React", "AI Recommendations", "Ecommerce UI"],
-    highlights: [
-      "Style DNA onboarding quiz",
-      "AI-generated outfit recommendations",
-      "Shop-by-mood browsing experience",
+      "An AI-powered contract obligation management platform that analyzes contracts, identifies key obligations, and generates AI-assisted insights to help users manage contractual responsibilities.",
+    tags: [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Mongoose",
+      "Grok AI API",
+      "Zod",
     ],
-    liveUrl: "#",
-    githubUrl: "#",
+    highlights: [
+      "AI-powered contract analysis using Grok AI.",
+      "Automated identification and extraction of contractual obligations.",
+      "AI-generated suggestions with confidence indicators.",
+      "Contract and obligation management.",
+      "REST API-based backend architecture.",
+      "Structured validation using Zod.",
+    ],
+    caseStudy: {
+      overview:
+        "ClauseGuard is a full-stack contract management application that uses Grok AI to analyze contracts and identify important contractual obligations. It helps users understand contract requirements, extract obligations, review AI-generated suggestions, and manage important responsibilities through an organized interface.",
+      integrationDetails:
+        "The Grok AI integration is functional end-to-end. It powers contract analysis, obligation identification, and AI-generated suggestions with confidence indicators.",
+    },
     accent: "purple",
-  },
-  {
-    id: "shoe-store",
-    title: "Shoe Ecommerce Store",
-    category: "Ecommerce",
-    description:
-      "A modern sneaker storefront focused on fast browsing, clean product pages, and a polished cart experience.",
-    tags: ["React", "Ecommerce", "Responsive UI"],
-    highlights: [
-      "Product filtering & variant selection",
-      "Cart & checkout flow",
-      "Mobile-first responsive layout",
-    ],
-    liveUrl: "#",
-    githubUrl: "#",
-    accent: "blue",
-  },
-  {
-    id: "clothing-ecommerce",
-    title: "Clothing Ecommerce",
-    category: "Ecommerce",
-    description:
-      "A general-purpose apparel storefront exploring layout, catalog structure, and conversion-focused UI patterns.",
-    tags: ["React", "Ecommerce", "UI/UX"],
-    highlights: [
-      "Category-based catalog browsing",
-      "Reusable product card system",
-      "Clean, conversion-focused layout",
-    ],
-    liveUrl: "#",
-    githubUrl: "#",
-    accent: "cyan",
   },
 ];
 
-export type Service = {
-  id: string;
-  title: string;
+export type ExperienceEntry = {
+  role: string;
+  company: string;
+  location: string;
+  duration: string;
+  internship: string;
+  technologies: string[];
   description: string;
-  points: string[];
 };
 
-export const services: Service[] = [
+export const experiences: ExperienceEntry[] = [
   {
-    id: "frontend",
-    title: "Frontend Development",
+    role: "Backend Developer Intern",
+    company: "Bhupati Softwares Private Limited",
+    location: "Akola, Maharashtra",
+    duration: "June 2025 – July 2025",
+    internship: "150-hour Backend Development Internship",
+    technologies: ["PHP", "MySQL", "XAMPP"],
     description:
-      "Premium, high-performance interfaces built with React and Next.js — the kind that make people stop scrolling.",
-    points: ["Responsive UI systems", "Motion & micro-interactions", "Accessibility built in"],
-  },
-  {
-    id: "backend",
-    title: "Backend Development",
-    description:
-      "Robust APIs and data layers using Node.js, Express, and MongoDB, built to scale with your product.",
-    points: ["REST API design", "Authentication & authorization", "Database architecture"],
-  },
-  {
-    id: "ai",
-    title: "AI Integration",
-    description:
-      "Practical AI features — recommendations, assistants, and automation — powered by modern LLM APIs.",
-    points: ["OpenAI API integration", "Prompt engineering", "Agentic workflows"],
-  },
-  {
-    id: "automation",
-    title: "Automation & Consulting",
-    description:
-      "Streamlining repetitive workflows and advising on how AI can fit into your existing product.",
-    points: ["Workflow automation", "Technical consulting", "Rapid prototyping"],
+      "Completed a 150-hour Backend Development Internship focused on PHP and MySQL. Gained practical exposure to backend development, database management, and working with a local development environment using XAMPP.",
   },
 ];
 
